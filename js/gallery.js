@@ -5,10 +5,11 @@ window.cxgallery = window.cxgallery || {};
 	var carousel = new ns.ImageCarousel(),
 		currentImg = carousel.getCurrentImage(),
 		canvas = document.createElement('canvas'),
-		background;
-		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight,
+		background,
 		hideGallery = (location.href.indexOf('hidegallery') > 0);
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
+
 	
 	function init() {
 		var elm = document.body,

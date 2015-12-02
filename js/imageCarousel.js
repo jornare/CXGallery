@@ -27,7 +27,7 @@ window.cxgallery = window.cxgallery || {};
 		this.nextImg.img.style.display='none';
 	}
 	
-	ImageCarousel.prototype.shw = function(){
+	ImageCarousel.prototype.show = function(){
 		this.currentImg.img.style.display='block';
 		this.nextImg.img.style.display='block';
 	}
