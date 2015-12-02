@@ -2,8 +2,9 @@ window.cxgallery = window.cxgallery || {};
 
 (function(ns){
 	"use strict"
-	document.addEventListener('DOMContentLoaded', init);
-	var carousel = new ns.ImageCarousel(),
+
+	var interval = parseInt(getQueryParam('interval')) || 0,
+		carousel = new ns.ImageCarousel(),
 		canvas = document.createElement('canvas'),
 		background,
 		hideGallery = (location.href.indexOf('hidegallery') > 0);
@@ -20,11 +21,29 @@ window.cxgallery = window.cxgallery || {};
 		elm.appendChild(canvas);
 
 		hideGallery && carousel.hide();
-		carousel.play();
+		carousel.play(interval);
 		
 		background = new ns.Background(gl);
 
 		renderLoop();
+	}
+	
+	function getQueryParam(q) {
+        var a = location.search.substr(1).split('&'),
+			b,
+			i;
+        for (i = 0; i < a.length; i++) {
+            b = a[i].split('=');
+			if(b[0]==q) {
+				return decodeURIComponent(b[1]);
+			}
+        }
+        return '';
+    }
+	
+	function resize() {
+		canvas.width = window.innerWidth;
+		canvas.height = window.innerHeight;
 	}
 	
 	function renderLoop() {
@@ -37,6 +56,7 @@ window.cxgallery = window.cxgallery || {};
 	}
 
 	
-
+	document.addEventListener('DOMContentLoaded', init, false);
+	document.addEventListener('resize', resize, false);
 
 }(window.cxgallery));

@@ -10,7 +10,7 @@ window.cxgallery = window.cxgallery || {};
 		constructor() {
 			this.currentImg = new Image(1);
 			this.nextImg = new Image(2);
-			this.nextImg.img.style.opacity = 0;
+			this.currentImg.fadeIn();
 			this.interval = null; //not playing
 			
 			this.nextImg.onError = this.currentImg.onError = function() {

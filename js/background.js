@@ -1,5 +1,6 @@
 window.cxgallery = window.cxgallery || {};
 (function(ns){
+	'use strict'
 	//vertex shader
 	var vs = 'attribute vec2 pos;varying vec4 v_positionWithOffset;uniform vec4 u_offset;' +
 		'void main() { gl_Position = vec4(pos, 0, 1) + u_offset; v_positionWithOffset = vec4(gl_Position)*0.5+0.5;}';
@@ -9,32 +10,32 @@ window.cxgallery = window.cxgallery || {};
 		'gl_FragColor = vec4(x, y, 0.0, 0.0) * (1.0 - (x*x)) * (1.0 -(y*y)); }';
 		var vertices = [-1.0, -1.0, 1.0, 1.0, 1.0, -1.0]; 
 		
-	function Background(gl) {
-		//gl.clearColor(0.1, 0.42, 0.55, 1.0);
-		gl.clearColor(0.0, 0.0, 0.0, 1.0);
-		// Enable depth testing
-		gl.enable(gl.DEPTH_TEST);
-		// Near things obscure far things
-		gl.depthFunc(gl.LEQUAL);
+	class Background {
+		constructor(gl) {
+			//gl.clearColor(0.1, 0.42, 0.55, 1.0);
+			gl.clearColor(0.0, 0.0, 0.0, 1.0);
+			// Enable depth testing
+			gl.enable(gl.DEPTH_TEST);
+			// Near things obscure far things
+			gl.depthFunc(gl.LEQUAL);
+	
+			this.program = createProgram(gl, vs,fs);
+		}
 
-		this.program = createProgram(gl, vs,fs);
+		draw (canvas) {
+			var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+			var t = Date.now()*0.001;
+			vertices[0]=Math.sin(t);
+			vertices[1]=Math.cos(t); 
+			bindVertices(gl, vertices);
+	
+			prepareProgram(this.program, gl);
+			// Clear the color as well as the depth buffer.
+			gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+			
+			gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 2);	
+		}
 	}
-	
-
-	
-	Background.prototype.draw = function(canvas) {
-		var gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-		var t = Date.now()*0.001;
-		vertices[0]=Math.sin(t);
-		vertices[1]=Math.cos(t); 
-		bindVertices(gl, vertices);
-
-		prepareProgram(this.program, gl);
-		// Clear the color as well as the depth buffer.
-		gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-		
-		gl.drawArrays(gl.TRIANGLES, 0, vertices.length / 2);	
-	};
 	
 	function bindVertices(gl, vertices){
 		var vertexPosBuffer = gl.createBuffer();
