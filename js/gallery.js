@@ -1,9 +1,9 @@
 window.cxgallery = window.cxgallery || {};
 
 (function(ns){
+	"use strict"
 	document.addEventListener('DOMContentLoaded', init);
 	var carousel = new ns.ImageCarousel(),
-		currentImg = carousel.getCurrentImage(),
 		canvas = document.createElement('canvas'),
 		background,
 		hideGallery = (location.href.indexOf('hidegallery') > 0);
@@ -20,9 +20,10 @@ window.cxgallery = window.cxgallery || {};
 		elm.appendChild(canvas);
 
 		hideGallery && carousel.hide();
-
+		carousel.play();
+		
 		background = new ns.Background(gl);
-		setInterval(changeImage, 5000);
+
 		renderLoop();
 	}
 	
@@ -33,19 +34,6 @@ window.cxgallery = window.cxgallery || {};
 	
 	function draw(){
 		background.draw(canvas);
-	}
-	
-	
-	function changeImage() {
-		var lastImg = currentImg;
-		currentImg = carousel.getNextImage();
-		//document.body.appendChild(currentImg.img);
-
-		lastImg.fadeOut(function() {
-			
-			//document.body.removeChild(lastImg);
-		});
-		currentImg.fadeIn();
 	}
 
 	

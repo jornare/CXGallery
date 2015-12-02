@@ -14,8 +14,9 @@ img {
 	bottom: 0;
 	margin-right: auto;
 	margin-top: auto;
-	opacity: 0.9;
+	opacity: 0.0;
 	transition: 500ms all ease-in;
+	z-index:2;
 }
 
 .fadeout {
