@@ -5,12 +5,16 @@ body {
 }
 
 img {
-	position:absolute;
-	width: 80%;
-	height: 80%;
+	position:fixed;
+	height: 90%;
 	margin: auto;
-	margin-left: auto;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
 	margin-right: auto;
+	margin-top: auto;
+	opacity: 0.9;
 	transition: 500ms all ease-in;
 }
 
@@ -19,5 +23,5 @@ img {
 }
 
 .fadein {
-	opacity: 1;
+	opacity: 0.9;
 }

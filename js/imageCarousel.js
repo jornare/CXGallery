@@ -22,6 +22,16 @@ window.cxgallery = window.cxgallery || {};
 		return this.currentImg;
 	}
 	
+	ImageCarousel.prototype.hide = function(){
+		this.currentImg.img.style.display='none';
+		this.nextImg.img.style.display='none';
+	}
+	
+	ImageCarousel.prototype.shw = function(){
+		this.currentImg.img.style.display='block';
+		this.nextImg.img.style.display='block';
+	}
+	
 	function Image(id) {
 		var self = this;
 		this.img = document.createElement('img');

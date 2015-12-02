@@ -7,7 +7,8 @@ window.cxgallery = window.cxgallery || {};
 		canvas = document.createElement('canvas'),
 		background;
 		canvas.width = window.innerWidth;
-		canvas.height = window.innerHeight;
+		canvas.height = window.innerHeight,
+		hideGallery = (location.href.indexOf('hidegallery') > 0);
 	
 	function init() {
 		var elm = document.body,
@@ -17,7 +18,8 @@ window.cxgallery = window.cxgallery || {};
 		elm.appendChild(carousel.nextImg.img);
 		elm.appendChild(canvas);
 
-		
+		hideGallery && carousel.hide();
+
 		background = new ns.Background(gl);
 		setInterval(changeImage, 5000);
 		renderLoop();
@@ -43,7 +45,6 @@ window.cxgallery = window.cxgallery || {};
 			//document.body.removeChild(lastImg);
 		});
 		currentImg.fadeIn();
-		background.draw();
 	}
 
 	
