@@ -24,8 +24,27 @@ window.cxgallery = window.cxgallery || {};
 		carousel.play(interval);
 		
 		background = new ns.Background(gl);
-
-		renderLoop();
+		var c = 'rgba(26, 137, 107, 0.9)';
+		//c = 'rgba(0, 255, 130, 1)'
+		$('body').Geometryangle(
+			{
+				mesh:{
+					ambient: c,
+					diffuse: 'rgba(26, 107, 138, 1)',
+					background: 'rgb(0, 0, 0)'
+				},
+				lights: [{
+					gravity: 100,
+					speed: 0.001,
+					dampening: 1,
+					autopilot: true
+				}],
+				line: {
+					thickness: 5
+				},
+				vertex: {}}
+			);		
+		//renderLoop();
 	}
 	
 	function getQueryParam(q) {
