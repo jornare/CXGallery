@@ -1922,7 +1922,7 @@ FSS.SVGRenderer.prototype.formatStyle = function (color) {
         }
 
         function onMouseMove(event) {
-            console.log(event);
+            //console.log(event);
             FSS.Vector3.set(attractor, event.x, event.y);
             /* 			FSS.Vector3.subtract(attractor, center); */
         }

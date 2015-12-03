@@ -4,7 +4,8 @@ window.cxgallery = window.cxgallery || {};
 	"use strict"
 
 	var interval = parseInt(getQueryParam('interval')) || 0,
-		carousel = new ns.ImageCarousel(),
+		path = getQueryParam('path') || 'gallery/',
+		carousel = new ns.ImageCarousel(path),
 		canvas = document.createElement('canvas'),
 		background,
 		hideGallery = (location.href.indexOf('hidegallery') > 0);

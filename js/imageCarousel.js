@@ -7,9 +7,9 @@ window.cxgallery = window.cxgallery || {};
 
 	class ImageCarousel {
 		
-		constructor() {
-			this.currentImg = new Image(1);
-			this.nextImg = new Image(2);
+		constructor(path) {
+			this.currentImg = new Image(1, path);
+			this.nextImg = new Image(2, path);
 			this.currentImg.fadeIn();
 			this.interval = null; //not playing
 			
@@ -33,10 +33,9 @@ window.cxgallery = window.cxgallery || {};
 		goNext() {
 			var self = this;
 			this.currentImg.fadeOut(function() {
-				console.log('fade out' + this.id);
+
 			});
 			this.nextImg.fadeIn(function() {
-				console.log('fade in' + this.id);
 				var lastImg = self.currentImg;
 				self.currentImg = self.nextImg;
 				self.nextImg = lastImg;
@@ -77,8 +76,9 @@ window.cxgallery = window.cxgallery || {};
 	ns.ImageCarousel = ImageCarousel;
 
 	class Image{
-		constructor(id) {
+		constructor(id, path) {
 			var self = this;
+			this.path = path;
 			this.img = document.createElement('img');
 			this.loaded = false;
 			this.onLoaded = function(){};
@@ -95,9 +95,9 @@ window.cxgallery = window.cxgallery || {};
 			this.load(id);
 		}
 	
-		load(id) {
+		load(id, path) {
 			this.id = id;
-			this.img.src = "gallery/" + id + '.jpg';
+			this.img.src = this.path + id + '.jpg';
 		};
 		
 		fadeIn(callback){
