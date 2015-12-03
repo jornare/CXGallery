@@ -4,19 +4,41 @@ body {
 	margin: 0;
 }
 
+.imageCarousel{
+
+}
+
+.imageCarousel .title {
+	position: absolute;
+	z-index: 2;
+	border: 1px solid gray;
+	background: rebeccapurple;
+	padding: 4px;
+	display: inline-block;
+	opacity: 0.5;
+	transition: 100ms all ease-in;
+}
+
+.imageCarousel .titleText {
+	position: absolute;
+	z-index: 2;
+	padding: 4px;
+	color: white;
+	font-size: x-large;
+	opacity: 1;
+}
+
 img {
 	position:fixed;
 	height: 90%;
-	margin: auto;
 	left: 0;
 	right: 0;
 	top: 0;
 	bottom: 0;
-	margin-right: auto;
-	margin-top: auto;
-	opacity: 0.0;
-	transition: 500ms all ease-in;
 	z-index:2;
+	margin: auto;
+	opacity: 0.0;
+	transition: 800ms all ease-in;
 }
 
 .fadeout {
