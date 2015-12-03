@@ -8,16 +8,53 @@ window.cxgallery = window.cxgallery || {};
 	class ImageCarousel {
 		
 		constructor(path) {
+			this.container = document.createElement('div');
+			this.container.classList.add('imageCarousel');
+			this.titleDiv = document.createElement('div');
+			this.titleDiv.classList.add('title');
+			this.titleTextDiv = document.createElement('div');
+			this.titleTextDiv.classList.add('titleText');
 			this.currentImg = new Image(1, path);
 			this.nextImg = new Image(2, path);
+			this.container.appendChild(this.currentImg.img);
+			this.container.appendChild(this.nextImg.img);
+			this.container.appendChild(this.titleDiv);
+			this.container.appendChild(this.titleTextDiv);
 			this.currentImg.fadeIn();
 			this.interval = null; //not playing
-			
+			this.path = path;
+			this.titles = {};
+			this.loadTitles(function() {
+				this.setTitle(this.titles[this.currentImg.id] || '');
+			});
 			this.nextImg.onError = this.currentImg.onError = function() {
 				this.load(1);
 			};	
 		}
 
+		loadTitles(callback) {
+			var xhttp = new XMLHttpRequest(),
+				self = this;
+			xhttp.onreadystatechange = function() {
+				if (xhttp.readyState == 4 && xhttp.responseText) {
+					self.parseTitles(xhttp.responseText);
+					callback.call(self);
+				}
+			};
+			xhttp.open("GET", this.path + "titles.txt", true);
+			xhttp.send();
+		}
+		
+		parseTitles(titles) {
+			var ix, a, i, t = titles.split('\n');
+			this.titles = {};
+			for(i = 0; i< t.length; i++) {
+				a = t[i].trim().split(' ');
+				ix = a[0] || 0;
+				this.titles[ix] = a.slice(1).join(' ');
+			}
+		}
+		
 		getCurrentImage(){
 			return this.currentImg;
 		}
@@ -36,11 +73,26 @@ window.cxgallery = window.cxgallery || {};
 
 			});
 			this.nextImg.fadeIn(function() {
-				var lastImg = self.currentImg;
+				var lastImg = self.currentImg,
+					title = self.titles[self.nextImg.id] || '';
 				self.currentImg = self.nextImg;
 				self.nextImg = lastImg;
 				self.nextImg.load(self.currentImg.id + 1);
+				self.setTitle(title);
 			});
+		}
+		
+		setTitle(title) {
+			if(title) {
+				this.titleDiv.style.display = this.titleTextDiv.style.display = 'inline-block';
+				this.titleDiv.style.left = this.titleTextDiv.style.left = this.currentImg.img.offsetLeft + 'px';
+				this.titleDiv.style.top = this.titleTextDiv.style.top = this.currentImg.img.offsetTop + 'px';
+				this.titleTextDiv.innerText = title;
+				this.titleDiv.style.width = this.titleTextDiv.offsetWidth + 'px';
+				this.titleDiv.style.height = this.titleTextDiv.offsetHeight + 'px';
+			} else {
+				this.titleDiv.style.display = this.titleTextDiv.style.display = 'none';
+			}
 		}
 		
 		play(interval) {
@@ -83,6 +135,7 @@ window.cxgallery = window.cxgallery || {};
 			this.loaded = false;
 			this.onLoaded = function(){};
 			this.onError = function(){};
+			this.title = '';
 			this.img.onload = function(evt) {
 				self.loaded = true;
 				self.onLoaded();
@@ -105,14 +158,14 @@ window.cxgallery = window.cxgallery || {};
 			//this.img.classList.remove('fadeout');
 			this.img.classList.add('fadein');
 			callback && setTimeout(function () {
-				callback.call(self);}, 500);
+				callback.call(self);}, 800);
 		}
 		fadeOut(callback) {
 			var self = this;
 			this.img.classList.remove('fadein');
 			//this.img.classList.add('fadeout');
 			callback && setTimeout(function () {
-				callback.call(self);}, 500);
+				callback.call(self);}, 800);
 		}
 	}
 	ns.Image = Image;

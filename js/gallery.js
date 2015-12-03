@@ -17,28 +17,33 @@ window.cxgallery = window.cxgallery || {};
 		var elm = document.body,
 			gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
 
-		elm.appendChild(carousel.currentImg.img);
-		elm.appendChild(carousel.nextImg.img);
+		elm.appendChild(carousel.container);
 		elm.appendChild(canvas);
 
 		hideGallery && carousel.hide();
 		carousel.play(interval);
 		
 		background = new ns.Background(gl);
-		var c = 'rgba(26, 137, 107, 0.9)';
-		//c = 'rgba(0, 255, 130, 1)'
+
+		var purple = 'rgb(46, 51, 137)',
+			green = 'rgb(26, 107, 138)',
+			black = 'rgb(0,0,0)',
+			white = 'rgb(255,255,255)';
 		$('body').Geometryangle(
 			{
 				mesh:{
-					ambient: c,
-					diffuse: 'rgba(26, 107, 138, 1)',
+					ambient: purple,
+					diffuse: green,
 					background: 'rgb(0, 0, 0)'
 				},
 				lights: [{
 					gravity: 100,
 					speed: 0.001,
-					dampening: 1,
-					autopilot: true
+					dampening: 0.01,
+					autopilot: true,
+					//diffuse: black,
+					//ambient: white,
+					zOffset: 200
 				}],
 				line: {
 					thickness: 5

@@ -17,3 +17,14 @@ Parameters are given in the url on the standard uri parameter format ?param1=val
 
 Example:
 index.html?interval=10000&path=c:\mygallery\
+
+Optional
+========
+Since the pictures must be named with numbers, it is an option to supply a file with the titles to be displayed.
+This file must be named 'titles.txt' and reside in the same folder as the pictures.
+This file should contain lines starting with the picture number followed by a single space and then the title.
+
+Example:
+1 Title of my fist picture
+2 This is a great day
+3 This is us again
