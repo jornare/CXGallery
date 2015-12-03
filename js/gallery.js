@@ -25,30 +25,38 @@ window.cxgallery = window.cxgallery || {};
 		
 		background = new ns.Background(gl);
 
-		var purple = 'rgb(46, 51, 137)',
+		var purple = 'rgb(33, 59, 93)',
 			green = 'rgb(26, 107, 138)',
 			black = 'rgb(0,0,0)',
 			white = 'rgb(255,255,255)';
 		$('body').Geometryangle(
 			{
 				mesh:{
-					ambient: purple,
-					diffuse: green,
-					background: 'rgb(0, 0, 0)'
+					ambient: 'rgb(53, 90, 109)',
+					diffuse: 'rgb(50,105,105)',
+					background: 'rgb(43, 69, 80)',
+					fluctuationSpeed: 0.01,
+					fluctuationIntensity: 1,
+					speed: 0.0003,
 				},
 				lights: [{
-					gravity: 100,
-					speed: 0.001,
+					count: 1,
+					gravity: 1000,
+					speed: 1,
 					dampening: 0.01,
 					autopilot: true,
-					//diffuse: black,
-					//ambient: white,
-					zOffset: 200
+					diffuse: 'rgb(44, 65, 111)',
+					ambient: 'rgb(70,70,90)',
+					zOffset: 300
 				}],
 				line: {
-					thickness: 5
+					fill: 'rgba(33,59,93,0.5)',
+					thickness: 1,
+					draw: true
 				},
-				vertex: {}}
+				vertex: {
+					draw: false
+				}}
 			);		
 		//renderLoop();
 	}
