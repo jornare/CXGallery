@@ -82,6 +82,6 @@ window.cxgallery = window.cxgallery || {};
 
 	
 	document.addEventListener('DOMContentLoaded', init, false);
-	document.addEventListener('resize', resize, false);
+	window.addEventListener('resize', resize, false);
 
 }(window.cxgallery));
