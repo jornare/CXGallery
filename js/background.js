@@ -2,13 +2,24 @@ window.cxgallery = window.cxgallery || {};
 (function(ns){
 	'use strict'
 	//vertex shader
-	var vs = 'attribute vec2 pos;varying vec4 v_positionWithOffset;uniform vec4 u_offset;' +
-		'void main() { gl_Position = vec4(pos, 0, 1) + u_offset; v_positionWithOffset = vec4(gl_Position)*0.5+0.5;}';
+	var vs = 'attribute vec2 pos;' +
+	         'varying vec4 v_positionWithOffset;' +
+	         'uniform vec4 u_offset;' +
+			 'void main() {' +
+			 	'gl_Position = vec4(pos, 0, 1) + u_offset;' +
+			 	'v_positionWithOffset = vec4(gl_Position)*0.5+0.5;' +
+			 '}';
 	//fragment shader
-	var fs = '#define PI 3.1415926535897932384626433832795\n#define PIHALF 1.570796326794897\nprecision mediump float; varying vec4 v_positionWithOffset;' +
-		'void main() {  float x = v_positionWithOffset.x; float y = v_positionWithOffset.y;'+
-		'gl_FragColor = vec4(x, y, 0.0, 0.0) * (1.0 - (x*x)) * (1.0 -(y*y)); }';
-		var vertices = [-1.0, -1.0, 1.0, 1.0, 1.0, -1.0]; 
+	var fs = '#define PI 3.1415926535897932384626433832795\n'
+			 '#define PIHALF 1.570796326794897\n' +
+			 'precision mediump float;' +
+			 'varying vec4 v_positionWithOffset;' +
+			 'void main() {' +
+			 	'float x = v_positionWithOffset.x;' +
+			 	'float y = v_positionWithOffset.y;'+
+				'gl_FragColor = vec4(x, y, 0.0, 0.0) * (1.0 - (x*x)) * (1.0 -(y*y));' +
+			 '}';
+	var vertices = [-1.0, -1.0, 1.0, 1.0, 1.0, -1.0]; 
 		
 	class Background {
 		constructor(gl) {
