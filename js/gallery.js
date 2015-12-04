@@ -4,6 +4,7 @@ window.cxgallery = window.cxgallery || {};
 	"use strict"
 
 	var interval = parseInt(getQueryParam('interval')) || 0,
+		templateName = getQueryParam('template') || 'turquois',
 		path = getQueryParam('path') || 'gallery/',
 		carousel = new ns.ImageCarousel(path),
 		canvas = document.createElement('canvas'),
@@ -25,12 +26,36 @@ window.cxgallery = window.cxgallery || {};
 		
 		background = new ns.Background(gl);
 
-		var purple = 'rgb(33, 59, 93)',
+		var purple = 'rgb(46, 51, 137)',
+			turquois = 'rgb(33, 59, 93)',
 			green = 'rgb(26, 107, 138)',
 			black = 'rgb(0,0,0)',
 			white = 'rgb(255,255,255)';
-		$('body').Geometryangle(
-			{
+			
+		var template = {
+			purple: {
+				mesh:{
+					ambient: purple,
+					diffuse: green,
+					background: black
+				},
+				lights: [{
+					gravity: 100,
+					speed: 0.001,
+					dampening: 0.01,
+					autopilot: true,
+					//diffuse: black,
+					//ambient: white,
+					zOffset: 200
+				}],
+				line: {
+					draw: false
+				},
+				vertex: {
+					draw: false
+				}
+			},
+			turquois: {
 				mesh:{
 					ambient: 'rgb(53, 90, 109)',
 					diffuse: 'rgb(50,105,105)',
@@ -56,8 +81,12 @@ window.cxgallery = window.cxgallery || {};
 				},
 				vertex: {
 					draw: false
-				}}
-			);		
+				}
+			}
+		};
+
+
+		$('body').Geometryangle(template[templateName]);		
 		//renderLoop();
 	}
 	

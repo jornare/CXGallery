@@ -21,9 +21,9 @@ Parameters are given in the url on the standard uri parameter format ?param1=val
 
 - interval: Controls the delay between photos in milliseconds
 - path: Controls where the photos are taken from (remember trailing slash or backslash). If the application is started from a server, a local path can not be given due to security reasons.
-
+- template: Controls the background (turquois or purple)
 Example:
-index.html?interval=10000&path=c:\mygallery\
+index.html?interval=10000&path=c:\mygallery\&template=purple
 
 Optional
 ========
