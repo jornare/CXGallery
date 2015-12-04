@@ -8,23 +8,19 @@ window.cxgallery = window.cxgallery || {};
 		path = getQueryParam('path') || 'gallery/',
 		carousel = new ns.ImageCarousel(path),
 		canvas = document.createElement('canvas'),
-		background,
 		hideGallery = (location.href.indexOf('hidegallery') > 0);
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
 
 	
 	function init() {
-		var elm = document.body,
-			gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
+		var elm = document.body;
 		setupFileDrop();
 		elm.appendChild(carousel.container);
 		elm.appendChild(canvas);
 
 		hideGallery && carousel.hide();
 		carousel.play(interval);
-		
-		background = new ns.Background(gl);
 
 		var deepblue = 'rgb(43, 69, 80)',
 			darkturquois = 'rgb(33, 59, 93)',
@@ -94,7 +90,6 @@ window.cxgallery = window.cxgallery || {};
 
 
 		$('body').Geometryangle(template[templateName]);		
-		//renderLoop();
 	}
 	
 	function getQueryParam(q) {
@@ -114,16 +109,6 @@ window.cxgallery = window.cxgallery || {};
 		canvas.width = window.innerWidth;
 		canvas.height = window.innerHeight;
 	}
-	
-	function renderLoop() {
-		draw();
-		requestAnimationFrame(renderLoop);
-	}
-	
-	function draw(){
-		background.draw(canvas);
-	}
-
 	
 	document.addEventListener('DOMContentLoaded', init, false);
 	window.addEventListener('resize', resize, false);
