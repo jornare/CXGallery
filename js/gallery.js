@@ -16,7 +16,7 @@ window.cxgallery = window.cxgallery || {};
 	function init() {
 		var elm = document.body,
 			gl = canvas.getContext("webgl") || canvas.getContext("experimental-webgl");
-
+		setupFileDrop();
 		elm.appendChild(carousel.container);
 		elm.appendChild(canvas);
 
@@ -90,6 +90,47 @@ window.cxgallery = window.cxgallery || {};
 
 	
 	document.addEventListener('DOMContentLoaded', init, false);
-	document.addEventListener('resize', resize, false);
+	window.addEventListener('resize', resize, false);
+
+
+	function setupFileDrop(){
+		//file upload
+		function handleFileSelect(evt) {
+			var i, f, files = [];
+			evt.stopPropagation();
+			evt.preventDefault();
+
+			// files is a FileList of File objects. Convert it to array
+			for (i = 0; evt.dataTransfer.files[i]; i++) {
+				files.push(evt.dataTransfer.files[i]);
+			}
+			files = files.sort(function(a, b) {
+				var a1 = a.name.split(' '), b1 = b.name.split(' ');
+				return parseInt(a1[0]) - parseInt(b1[0]);
+			});
+			
+			for (i = 0; f = files[i]; i++) {
+				// Only process image files.
+				if (!f.type.match('image.*')) {
+					continue;
+				}
+				carousel.addImageFile(f);
+			}
+		}
+		
+		function handleDragOver(evt) {
+			evt.stopPropagation();
+			evt.preventDefault();
+			evt.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+		}
+		
+		// Setup the dnd listeners.
+		var dropZone = document.body;
+		dropZone.addEventListener('dragover', handleDragOver, false);
+		dropZone.addEventListener('drop', handleFileSelect, false);
+	
+		
+	}
+
 
 }(window.cxgallery));

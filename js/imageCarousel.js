@@ -8,6 +8,7 @@ window.cxgallery = window.cxgallery || {};
 	class ImageCarousel {
 		
 		constructor(path) {
+			var carousel = this;
 			this.container = document.createElement('div');
 			this.container.classList.add('imageCarousel');
 			this.titleDiv = document.createElement('div');
@@ -23,12 +24,18 @@ window.cxgallery = window.cxgallery || {};
 			this.currentImg.fadeIn();
 			this.interval = null; //not playing
 			this.path = path;
+			this.imageFiles = [];
+			this.currentImageFile = -1;
 			this.titles = {};
 			this.loadTitles(function() {
 				this.setTitle(this.titles[this.currentImg.id] || '');
 			});
 			this.nextImg.onError = this.currentImg.onError = function() {
-				this.load(1);
+				if(this.currentImageFile == -1) {
+					this.load(1);
+				}else if(carousel.imageFiles.length){
+					console.log('err');
+				}
 			};	
 		}
 
@@ -77,9 +84,34 @@ window.cxgallery = window.cxgallery || {};
 					title = self.titles[self.nextImg.id] || '';
 				self.currentImg = self.nextImg;
 				self.nextImg = lastImg;
-				self.nextImg.load(self.currentImg.id + 1);
+				if(self.imageFiles.length) {
+					self.currentImageFile = (self.currentImageFile + 1) % self.imageFiles.length;
+					self.nextImg.loadFile(self.currentImageFile, self.imageFiles[self.currentImageFile]);
+				} else {
+					self.nextImg.load(self.currentImg.id + 1);
+				}
 				self.setTitle(title);
 			});
+		}
+		
+		addImageFile(fileHandle) {
+			this.titles[this.imageFiles.length] = this.fileNameToTitle(fileHandle.name);
+			this.imageFiles.push(fileHandle);
+			this.currentImageFile = this.currentImageFile == -1 ? 0 : this.currentImageFile;
+		}
+		
+		fileNameToTitle(fileName) {
+			var i = fileName.lastIndexOf('.'), parts;
+			fileName = fileName.substr(0, i); //remove extension
+			parts = fileName.split(' ');
+			if(parseInt(parts[0]) == parts[0] && parts.length > 1) { //remove number
+				fileName = parts.slice(1).join(' ');
+			}
+			if(fileName.charAt(0) == '_') { //empty title if filename starts with underscore
+				return '';
+			}
+			fileName.replace('_', ' ');
+			return fileName;
 		}
 		
 		setTitle(title) {
@@ -152,6 +184,22 @@ window.cxgallery = window.cxgallery || {};
 			this.id = id;
 			this.img.src = this.path + id + '.jpg';
 		};
+		
+		loadFile (id, fileHandle) {
+			var reader = new FileReader(),
+				img = this.img;
+			this.id = id;
+			// Closure to capture the file information.
+			reader.onload = (function(theFile) {
+				return function(e) {
+					img.src = e.target.result;
+					
+				};
+			})(fileHandle);
+		
+			// Read in the image file as a data URL.
+			reader.readAsDataURL(fileHandle);
+		}
 		
 		fadeIn(callback){
 			var self = this;
