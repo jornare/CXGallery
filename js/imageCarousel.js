@@ -31,9 +31,9 @@ window.cxgallery = window.cxgallery || {};
 				this.setTitle(this.titles[this.currentImg.id] || '');
 			});
 			this.nextImg.onError = this.currentImg.onError = function() {
-				if(this.currentImageFile == -1) {
+				if(carousel.imageFiles.length == 0) {
 					this.load(1);
-				}else if(carousel.imageFiles.length){
+				} else {
 					console.log('err');
 				}
 			};	
@@ -129,11 +129,11 @@ window.cxgallery = window.cxgallery || {};
 		
 		play(interval) {
 			var self = this;
-			interval = interval || 5000;
+			interval = interval || 5;
 			this.stop();
 			this.interval = setInterval(function() {
 				self.goNext();	
-			}, interval);
+			}, interval * 1000);
 		}
 		
 		pause() {
