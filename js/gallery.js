@@ -26,30 +26,37 @@ window.cxgallery = window.cxgallery || {};
 		
 		background = new ns.Background(gl);
 
-		var purple = 'rgb(46, 51, 137)',
-			turquois = 'rgb(33, 59, 93)',
-			green = 'rgb(26, 107, 138)',
+		var deepblue = 'rgb(43, 69, 80)',
+			darkturquois = 'rgb(33, 59, 93)',
 			black = 'rgb(0,0,0)',
-			white = 'rgb(255,255,255)';
+			white = 'rgb(255,255,255)',
+			darkpurple = 'rgb(85, 30, 70)',
+			puprle = 'rgba(85, 30, 70, 0.5)',
+			turquoisLine = 'rgba(33,59,93,0.5)';
+
+		var meshSpeed = 0.0001;
 			
 		var template = {
 			purple: {
 				mesh:{
-					ambient: purple,
-					diffuse: green,
-					background: black
+					ambient: 'rgb(46, 51, 137)',
+					diffuse: 'rgb(26, 107, 138)',
+					background: darkpurple,
+					fluctuationSpeed: 0.01,
+					fluctuationIntensity: 1,
+					speed: meshSpeed,
 				},
 				lights: [{
 					gravity: 100,
 					speed: 0.001,
 					dampening: 0.01,
 					autopilot: true,
-					//diffuse: black,
-					//ambient: white,
 					zOffset: 200
 				}],
 				line: {
-					draw: false
+					fill: puprle,
+					thickness: 1,
+					draw: true
 				},
 				vertex: {
 					draw: false
@@ -58,11 +65,11 @@ window.cxgallery = window.cxgallery || {};
 			turquois: {
 				mesh:{
 					ambient: 'rgb(53, 90, 109)',
-					diffuse: 'rgb(50,105,105)',
-					background: 'rgb(43, 69, 80)',
+					diffuse: 'rgb(50, 105, 105)',
+					background: deepblue,
 					fluctuationSpeed: 0.01,
 					fluctuationIntensity: 1,
-					speed: 0.0003,
+					speed: meshSpeed,
 				},
 				lights: [{
 					count: 1,
@@ -75,7 +82,7 @@ window.cxgallery = window.cxgallery || {};
 					zOffset: 300
 				}],
 				line: {
-					fill: 'rgba(33,59,93,0.5)',
+					fill: turquoisLine,
 					thickness: 1,
 					draw: true
 				},
