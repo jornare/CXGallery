@@ -88,29 +88,26 @@ window.cxgallery = window.cxgallery || {};
 	function setupFileDrop(){
 		//file upload
 		function handleFileSelect(evt) {
+			var i, f, files = [];
 			evt.stopPropagation();
 			evt.preventDefault();
-		
-			var files = evt.dataTransfer.files; // FileList object.
-		
-			// files is a FileList of File objects. List some properties.
-			var output = [];
-			for (var i = 0, f; f = files[i]; i++) {
 
-				console.log(f);
+			// files is a FileList of File objects. Convert it to array
+			for (i = 0; evt.dataTransfer.files[i]; i++) {
+				files.push(evt.dataTransfer.files[i]);
+			}
+			files = files.sort(function(a, b) {
+				var a1 = a.name.split(' '), b1 = b.name.split(' ');
+				return parseInt(a1[0]) - parseInt(b1[0]);
+			});
+			
+			for (i = 0; f = files[i]; i++) {
 				// Only process image files.
 				if (!f.type.match('image.*')) {
 					continue;
 				}
 				carousel.addImageFile(f);
-
-			/*output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-						f.size, ' bytes, last modified: ',
-						f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-						'</li>');*/
 			}
-			
-			//document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
 		}
 		
 		function handleDragOver(evt) {

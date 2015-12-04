@@ -5,7 +5,14 @@ Requirements
 ============
 The files must be .jpg and numbered from 1 (example: 1.jpg, 2.jpg, 3.jpg ...)
 The files must be placed in the folder "gallery", or a path must be given in the url (see below)
-
+OR
+Drag-drop files to the window and the gallery will be replaced with the dropped files.
+The files will be titled with their filename, and if it starts with a number this will be the sorting key.
+Start the title with an underscore to make it not show in the console.
+Example:
+1 Title of my fist picture.jpg
+2 This is a great day.jpg
+3 _This is us again but this title will not show.jpg
 
 
 Parameters

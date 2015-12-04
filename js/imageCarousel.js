@@ -101,11 +101,16 @@ window.cxgallery = window.cxgallery || {};
 		}
 		
 		fileNameToTitle(fileName) {
-			var i = fileName.lastIndexOf('.');
-			fileName = fileName.substr(0, i).replace('_', ' ');
+			var i = fileName.lastIndexOf('.'), parts;
+			fileName = fileName.substr(0, i); //remove extension
+			parts = fileName.split(' ');
+			if(parseInt(parts[0]) == parts[0] && parts.length > 1) { //remove number
+				fileName = parts.slice(1).join(' ');
+			}
 			if(fileName.charAt(0) == '_') { //empty title if filename starts with underscore
 				return '';
 			}
+			fileName.replace('_', ' ');
 			return fileName;
 		}
 		
