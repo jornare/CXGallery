@@ -1,2 +1,3 @@
-1 Hei
-2 Tittel 2
+1 Drag & Drop files here to create a slideshow
+2 Or put images in the gallery folder
+3 Read the readme file for more options
