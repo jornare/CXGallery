@@ -3,6 +3,7 @@ body {
 	padding: 0;
 	margin: 0;
 	overflow: hidden;
+	font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
 }
 
 .imageCarousel{
